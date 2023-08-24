@@ -16,56 +16,63 @@ import cssnanoPlugin from "cssnano";
 import postcssPresetEnv from 'postcss-preset-env';
 import WindiCSS from 'vite-plugin-windicss';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
-import { createStyleImportPlugin } from 'vite-plugin-style-import';
-import { is } from "ramda";
+import { includes } from "ramda";
+import nodeResolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import fs from 'fs';
 
 const pathResolve = (v: string) => path.resolve(__dirname, v)
 
+const depPackages = [...Object.keys(pkg.dependencies)]
 const externalPackages = [...Object.keys(pkg.peerDependencies)]
 const regexOfPackages = externalPackages
   .map(packageName => new RegExp(`^${packageName}(\\/.*)?`));
 
 const entries = {
-  'index': pathResolve('ui/index.ts')
+  'index': pathResolve('ui/index.ts'),
+  'locale/en_US': pathResolve('ui/locale/en_US.ts'),
+  'locale/zh_CN': pathResolve('ui/locale/zh_CN.ts'),
 }
-const otherEntryFile = Object.keys(entries).filter(e => e !== 'index')
+const level1s = ['components', 'containers', 'layouts']
+const locales = Object.keys(pkg.exports)
+  .filter(e => e.includes('locale'))
+  .map(e => e.split('./')[1])
+const components = Object.keys(pkg.exports)
+  .filter(e => e !== '.' && !e.includes('locale'))
+  .map(e => e.split('./')[1])
+  .filter(e => !includes(e, level1s))
+
+
+console.log('level1s', level1s)
+console.log('components', components)
 
 export default defineConfig({
-  resolve: {
-    alias: [
-      { find: /^~/, replacement: '' }
-    ],
-  },
   plugins: [
     react(),
-    createStyleImportPlugin({
-      libs: [
-        {
-          libraryName: 'react-evefyou-components',
-          esModule: true,
-          resolveStyle: (name) => `react-evefyou-components/${name}/windi.css`
-        }
-      ]
-    }),
     WindiCSS({
       scan: {
-        dirs: [
-          './ui',
-        ],
-        fileExtensions: ['tsx', 'ts', 'js', 'jsx', 'css']
+        dirs: ['./ui'],
+        fileExtensions: ['tsx', 'ts']
       }
     }),
     tsconfigPaths(),
     dts({
-      insertTypesEntry: true,
-      // rollupTypes: true,
-      outDir: ['types'],
-      beforeWriteFile: (filePath, content) => {
-        const entryDFile = otherEntryFile
-          .map(e => e.concat('.d.ts'))
-          .find(e => filePath.includes(e))
-        return entryDFile ? false : { filePath, content }
-      },
+      rollupTypes: true,
+      afterBuild: () => {
+        const directoryPath = '.';
+        const regexToDelete = /_\w+\.d\.ts$/;
+        fs.readdirSync(directoryPath).forEach((file) => {
+          const filePath = path.join(directoryPath, file);
+          if (regexToDelete.test(file)) {
+            try {
+              fs.unlinkSync(filePath);
+              console.log(`Deleted file: ${filePath}`);
+            } catch (err) {
+              console.error(`Error deleting file: ${err}`);
+            }
+          }
+        });
+      }
     }),
     libInjectCss({
       build: {
@@ -79,27 +86,38 @@ export default defineConfig({
       fileName: (format, entryName) => {
         return entryName === 'index'
           ? `${format}/index.js`
-          : entryName.includes('_')
-            ? `${format}/locale/${entryName}.js`
-            : `${format}/[name]/index.js`
+          : `${format}/[name]/index.js`
       },
       name: 'react-evefyou-ui',
       formats: ["es", "cjs"],
       rollupOptions: {
         output: {
-          chunkFileNames: (chunkInfo) => otherEntryFile.reduce(
-            (acc, cur) => !chunkInfo.isEntry && chunkInfo.moduleIds.findIndex(s => s.includes(cur)) !== -1
-              ? `[format]/${cur}/other.js` : acc,
-            '[format]/_common/[name]/[name].js'
-          ),
-          assetFileNames: (assetInfo) => {
-            console.log('assetInfo', assetInfo)
-            return is(String, assetInfo.source) && assetInfo.source.includes('h-full') 
-            ? '[ext]/windi.[ext]' 
-            : '[ext]/[name].[ext]'
+          manualChunks: (id) => {
+            let en = components
+              .map(e => e.split('/'))
+              .find(e => id.includes(e[0]) && id.includes(e[1]))?.join('/')
+            // console.log('level1s en', en)
+            en ??= level1s.find(e => id.includes(e))
+            // console.log('components en', en)
+            en ??= locales.find(l => id.includes(l.split('_')[0]))
+            console.log('manualChunks', id)
+            return en
           },
+          chunkFileNames: () => {
+            // console.log('chunkInfo', chunkInfo.name)
+            return '[format]/[name]/index.js'
+          },
+          assetFileNames: '[ext]/[name].[ext]',
         },
-        external: regexOfPackages
+        plugins: [
+          nodeResolve(),
+          commonjs()
+        ],
+        external: (source) => depPackages.find(p => source.includes(p))
+          ? false
+          : regexOfPackages.findIndex(p => p.test(source)) !== -1
+            ? true
+            : false
       }
     })
   ],
@@ -113,7 +131,7 @@ export default defineConfig({
           hack: `true; @import (reference) "${path.resolve('ui/_common/styles/variables/index.less')}";`,
           'primary-color': '#0960bd',
           'text-color': '#c9d1d9',
-          'text-color-base': '#000000d9'
+          'text-color-base': '#000000d9',
         }
       }
     },

@@ -1,27 +1,169 @@
 {
   "name": "react-evefyou-ui",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
   "module": "./es/index.js",
-  "types": "./types/index.d.ts",
+  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": "./es/index.js",
       "require": "./cjs/index.js",
-      "types": "./types/index.d.ts"
+      "types": "./index.d.ts"
     },
-    "./windi.css": {
-      "import": "./css/windi.css",
-      "require": "./css/windi.css"
+    "./locale/zh_CN": {
+      "import": "./es/locale/zh_CN/index.js",
+      "require": "./cjs/locale/zh_CN/index.js",
+      "types": "./locale/zh_CN.d.ts"
+    },
+    "./locale/en_US": {
+      "import": "./es/locale/en_US/index.js",
+      "require": "./cjs/locale/en_US/index.js",
+      "types": "./locale/en_US.d.ts"
+    },
+    "./components": {
+      "import": "./es/components/index.js",
+      "require": "./cjs/components/index.js",
+      "types": "./index.d.ts"
+    },
+    "./layouts": {
+      "import": "./es/layouts/index.js",
+      "require": "./cjs/layouts/index.js",
+      "types": "./index.d.ts"
+    },
+    "./containers": {
+      "import": "./es/containers/index.js",
+      "require": "./cjs/containers/index.js",
+      "types": "./index.d.ts"
+    },
+    "./layouts/AdminLayout": {
+      "import": "./es/layouts/AdminLayout/index.js",
+      "require": "./cjs/layouts/AdminLayout/index.js",
+      "types": "./index.d.ts"
+    },
+    "./layouts/CommonLayout": {
+      "import": "./es/layouts/CommonLayout/index.js",
+      "require": "./cjs/layouts/CommonLayout/index.js",
+      "types": "./index.d.ts"
+    },
+    "./layouts/BasicFooter": {
+      "import": "./es/layouts/BasicFooter/index.js",
+      "require": "./cjs/layouts/BasicFooter/index.js",
+      "types": "./index.d.ts"
+    },
+    "./layouts/BasicHeader": {
+      "import": "./es/layouts/BasicHeader/index.js",
+      "require": "./cjs/layouts/BasicHeader/index.js",
+      "types": "./index.d.ts"
+    },
+    "./layouts/BasicSider": {
+      "import": "./es/layouts/BasicSider/index.js",
+      "require": "./cjs/layouts/BasicSider/index.js",
+      "types": "./index.d.ts"
+    },
+    "./containers/BasicContainer": {
+      "import": "./es/containers/BasicContainer/index.js",
+      "require": "./cjs/containers/BasicContainer/index.js",
+      "types": "./index.d.ts"
+    },
+    "./containers/TabContainer": {
+      "import": "./es/containers/TabContainer/index.js",
+      "require": "./cjs/containers/TabContainer/index.js",
+      "types": "./index.d.ts"
+    },
+    "./containers/TableContainer": {
+      "import": "./es/containers/TableContainer/index.js",
+      "require": "./cjs/containers/TableContainer/index.js",
+      "types": "./index.d.ts"
+    },
+    "./containers/KeepAliveContainer": {
+      "import": "./es/containers/KeepAliveContainer/index.js",
+      "require": "./cjs/containers/KeepAliveContainer/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicButton": {
+      "import": "./es/components/BasicButton/index.js",
+      "require": "./cjs/components/BasicButton/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicDropdown": {
+      "import": "./es/components/BasicDropdown/index.js",
+      "require": "./cjs/components/BasicDropdown/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicForm": {
+      "import": "./es/components/BasicForm/index.js",
+      "require": "./cjs/components/BasicForm/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicHelp": {
+      "import": "./es/components/BasicHelp/index.js",
+      "require": "./cjs/components/BasicHelp/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicIcon": {
+      "import": "./es/components/BasicIcon/index.js",
+      "require": "./cjs/components/BasicIcon/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicMenu": {
+      "import": "./es/components/BasicMenu/index.js",
+      "require": "./cjs/components/BasicMenu/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicModal": {
+      "import": "./es/components/BasicModal/index.js",
+      "require": "./cjs/components/BasicModal/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicPopButton": {
+      "import": "./es/components/BasicPopButton/index.js",
+      "require": "./cjs/components/BasicPopButton/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicScroll": {
+      "import": "./es/components/BasicScroll/index.js",
+      "require": "./cjs/components/BasicScroll/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicTable": {
+      "import": "./es/components/BasicTable/index.js",
+      "require": "./cjs/components/BasicTable/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicTitle": {
+      "import": "./es/components/BasicTitle/index.js",
+      "require": "./cjs/components/BasicTitle/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicBreadcrumb": {
+      "import": "./es/components/BasicBreadcrumb/index.js",
+      "require": "./cjs/components/BasicBreadcrumb/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicFallback": {
+      "import": "./es/components/BasicFallback/index.js",
+      "require": "./cjs/components/BasicFallback/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicNProgress": {
+      "import": "./es/components/BasicNProgress/index.js",
+      "require": "./cjs/components/BasicNProgress/index.js",
+      "types": "./index.d.ts"
+    },
+    "./components/BasicResult": {
+      "import": "./es/components/BasicResult/index.js",
+      "require": "./cjs/components/BasicResult/index.js",
+      "types": "./index.d.ts"
     }
   },
   "files": [
     "cjs",
     "es",
     "css",
-    "types"
+    "index.d.ts",
+    "locale"
   ],
   "scripts": {
     "dev": "vite",
@@ -29,7 +171,7 @@
     "build:tsc": "tsc",
     "clean": "rimraf node_modules",
     "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
-    "clean:build": "rimraf es && rimraf cjs && rimraf css && rimraf dist && rimraf types",
+    "clean:build": "rimraf es && rimraf cjs && rimraf css && rimraf dist && rimraf locale",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -49,20 +191,30 @@
     "url": "https://github.com/EvefyouFE/react-evefyou-ui/issues"
   },
   "homepage": "https://github.com/EvefyouFE/react-evefyou-ui#readme",
+  "dependencies": {
+    "react-evefyou-components": "^1.0.21",
+    "react-evefyou-containers": "^1.0.15",
+    "react-evefyou-layouts": "^1.0.3"
+  },
   "peerDependencies": {
     "@ant-design/icons": ">=5.0.1",
+    "@dnd-kit/core": ">=6.0.8",
+    "@dnd-kit/modifiers": ">=6.0.1",
+    "@dnd-kit/sortable": ">=7.0.2",
+    "@dnd-kit/utilities": ">=3.2.1",
+    "@emotion/css": ">=11.11.0",
     "@iconify/react": ">=4.1.1",
     "ahooks": ">=3.7.6",
     "antd": ">=5.6.3",
     "classnames": ">=2.3.2",
     "moment": ">=2.29.4",
+    "nprogress": ">=0.2.0",
     "ramda": ">=0.29.0",
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0",
-    "react-evefyou-components": ">=1.0.11",
-    "react-evefyou-containers": ">=1.0.6",
-    "react-evefyou-hooks": ">=1.0.7",
-    "react-evefyou-layouts": ">=1.0.0",
+    "react-draggable": ">=4.4.5",
+    "react-evefyou-hooks": ">=1.0.9",
+    "react-evefyou-router": ">=1.0.7",
     "react-intl": ">=6.4.4",
     "react-router": ">=6.10.0",
     "react-router-dom": ">=6.10.0",
@@ -70,6 +222,8 @@
   },
   "devDependencies": {
     "@ant-design/colors": "^7.0.0",
+    "@rollup/plugin-commonjs": "^25.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.1",
     "@types/node": "^20.5.1",
     "@types/ramda": "^0.29.0",
     "@types/react": "^18.2.15",
@@ -95,7 +249,6 @@
     "vite": "^4.4.5",
     "vite-plugin-dts": "^3.5.1",
     "vite-plugin-lib-inject-css": "^1.2.1",
-    "vite-plugin-style-import": "^2.0.0",
     "vite-plugin-windicss": "^1.9.0",
     "vite-tsconfig-paths": "^4.2.0",
     "windicss": "^3.5.6"
