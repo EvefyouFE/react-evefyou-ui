@@ -1,6 +1,6 @@
 /*
- * @Author: EvefyouFE
- * @Date: 2023-08-10 13:42:48
+ * @Author: EvefyouFE/evef
+ * @Date: 2023-08-23 14:48:31
  * @FilePath: \react-evefyou-ui\vite.config.ts
  * @Description: 
  * Everyone is coming to the world i live in, as i am going to the world lives for you. 人人皆往我世界，我为世界中人人。
@@ -24,7 +24,7 @@ import fs from 'fs';
 const pathResolve = (v: string) => path.resolve(__dirname, v)
 
 const depPackages = [...Object.keys(pkg.dependencies)]
-const externalPackages = [...Object.keys(pkg.peerDependencies)]
+const externalPackages = [...Object.keys(pkg.peerDependencies), ...Object.keys(pkg.dependencies)]
 const regexOfPackages = externalPackages
   .map(packageName => new RegExp(`^${packageName}(\\/.*)?`));
 
@@ -57,6 +57,7 @@ export default defineConfig({
     }),
     tsconfigPaths(),
     dts({
+      // insertTypesEntry: true,
       rollupTypes: true,
       afterBuild: () => {
         const directoryPath = '.';
@@ -76,7 +77,6 @@ export default defineConfig({
     }),
     libInjectCss({
       build: {
-        manifest: true,
         minify: true,
         reportCompressedSize: true,
         cssCodeSplit: true,
@@ -96,11 +96,11 @@ export default defineConfig({
             let en = components
               .map(e => e.split('/'))
               .find(e => id.includes(e[0]) && id.includes(e[1]))?.join('/')
-            // console.log('level1s en', en)
+            console.log('components en', en, id)
             en ??= level1s.find(e => id.includes(e))
-            // console.log('components en', en)
+            // console.log('level1s en', en)
             en ??= locales.find(l => id.includes(l.split('_')[0]))
-            console.log('manualChunks', id)
+            // console.log('manualChunks', id)
             return en
           },
           chunkFileNames: () => {
