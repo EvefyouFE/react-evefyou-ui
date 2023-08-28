@@ -1,6 +1,6 @@
 {
   "name": "react-evefyou-ui",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",

@@ -30,8 +30,8 @@ const regexOfPackages = externalPackages
 
 const entries = {
   'index': pathResolve('ui/index.ts'),
-  // 'locale/en_US': pathResolve('ui/locale/en_US.ts'),
-  // 'locale/zh_CN': pathResolve('ui/locale/zh_CN.ts'),
+  'locale/en_US': pathResolve('ui/locale/en_US.ts'),
+  'locale/zh_CN': pathResolve('ui/locale/zh_CN.ts'),
 }
 const level1s = ['components', 'containers', 'layouts']
 const locales = Object.keys(pkg.exports)
@@ -83,11 +83,11 @@ export default defineConfig({
         outDir: '.',
       },
       entry: entries,
-      fileName: (format, entryName) => {
-        return entryName === 'index'
-          ? `${format}/index.js`
-          : `${format}/[name]/index.js`
-      },
+      // fileName: (format, entryName) => {
+      //   return entryName === 'index'
+      //     ? `${format}/index.js`
+      //     : `${format}/[name]/index.js`
+      // },
       name: 'react-evefyou-ui',
       formats: ["es", "cjs"],
       rollupOptions: {
@@ -138,18 +138,18 @@ export default defineConfig({
             en ??= level1s.find(e => id.includes(e))
             // console.log('level1s en', en)
             en ??= locales.find(l => id.includes(l.split('_')[0]))
-            // console.log('manualChunks', id)
-            if (id.includes('.css'))
-              en = pipe(
-                split('/'),
-                last,
-                split('.css'),
-                head
-              )(id) as string
-            console.log('css manualChunks', en, id)
+            console.log('manualChunks', id)
+            // if (id.includes('windi.css'))
+            //   en = pipe(
+            //     split('/'),
+            //     last,
+            //     split('.css'),
+            //     head
+            //   )(id) as string
+            // id.includes('windi.css') && console.log('css manualChunks', en, id)
             return en
           },
-          // entryFileNames: (chunkInfo) => chunkInfo.name === 'index' ? '[format]/index.js' : '[format]/[name]/index.js',
+          entryFileNames: (chunkInfo) => chunkInfo.name === 'index' ? '[format]/index.js' : '[format]/[name]/index.js',
           chunkFileNames: '[format]/[name]/index.js',
           assetFileNames: '[ext]/[name].[ext]',
         },
