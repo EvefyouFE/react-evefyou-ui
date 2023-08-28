@@ -1,6 +1,0 @@
-export * from 'react-evefyou-layouts'
-export * from './AdminLayout'
-export * from './BasicFooter'
-export * from './BasicHeader'
-export * from './BasicSider'
-export * from './CommonLayout'

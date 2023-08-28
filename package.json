@@ -1,6 +1,6 @@
 {
   "name": "react-evefyou-ui",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
@@ -82,6 +82,11 @@
       "require": "./cjs/containers/KeepAliveContainer/index.js",
       "types": "./index.d.ts"
     },
+    "./components/BasicBreadcrumb": {
+      "import": "./es/components/BasicBreadcrumb/index.js",
+      "require": "./cjs/components/BasicBreadcrumb/index.js",
+      "types": "./index.d.ts"
+    },
     "./components/BasicButton": {
       "import": "./es/components/BasicButton/index.js",
       "require": "./cjs/components/BasicButton/index.js",
@@ -137,11 +142,6 @@
       "require": "./cjs/components/BasicTitle/index.js",
       "types": "./index.d.ts"
     },
-    "./components/BasicBreadcrumb": {
-      "import": "./es/components/BasicBreadcrumb/index.js",
-      "require": "./cjs/components/BasicBreadcrumb/index.js",
-      "types": "./index.d.ts"
-    },
     "./components/BasicFallback": {
       "import": "./es/components/BasicFallback/index.js",
       "require": "./cjs/components/BasicFallback/index.js",
@@ -192,9 +192,9 @@
   },
   "homepage": "https://github.com/EvefyouFE/react-evefyou-ui#readme",
   "dependencies": {
-    "react-evefyou-components": "^1.0.21",
-    "react-evefyou-containers": "^1.0.16",
-    "react-evefyou-layouts": "^1.0.3"
+    "react-evefyou-components": "^1.0.27",
+    "react-evefyou-containers": "^1.0.19",
+    "react-evefyou-layouts": "^1.0.6"
   },
   "peerDependencies": {
     "@ant-design/icons": ">=5.0.1",
@@ -213,6 +213,7 @@
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0",
     "react-draggable": ">=4.4.5",
+    "react-evefyou-common": ">=1.0.1",
     "react-evefyou-hooks": ">=1.0.10",
     "react-evefyou-router": ">=1.0.7",
     "react-intl": ">=6.4.4",

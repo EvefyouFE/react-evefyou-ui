@@ -16,7 +16,7 @@ import cssnanoPlugin from "cssnano";
 import postcssPresetEnv from 'postcss-preset-env';
 import WindiCSS from 'vite-plugin-windicss';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
-import { includes } from "ramda";
+import { head, includes, last, pipe, split } from "ramda";
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import fs from 'fs';
@@ -30,8 +30,8 @@ const regexOfPackages = externalPackages
 
 const entries = {
   'index': pathResolve('ui/index.ts'),
-  'locale/en_US': pathResolve('ui/locale/en_US.ts'),
-  'locale/zh_CN': pathResolve('ui/locale/zh_CN.ts'),
+  // 'locale/en_US': pathResolve('ui/locale/en_US.ts'),
+  // 'locale/zh_CN': pathResolve('ui/locale/zh_CN.ts'),
 }
 const level1s = ['components', 'containers', 'layouts']
 const locales = Object.keys(pkg.exports)
@@ -79,7 +79,7 @@ export default defineConfig({
       build: {
         minify: true,
         reportCompressedSize: true,
-        cssCodeSplit: true,
+        // cssCodeSplit: true,
         outDir: '.',
       },
       entry: entries,
@@ -91,22 +91,66 @@ export default defineConfig({
       name: 'react-evefyou-ui',
       formats: ["es", "cjs"],
       rollupOptions: {
+        input: {
+          'index': 'ui/index.ts',
+          'locale/en_US': 'ui/locale/en_US.ts',
+          'locale/zh_CN': 'ui/locale/zh_CN.ts',
+          "layouts/AdminLayout": "./node_modules/react-evefyou-layouts/es/AdminLayout/index.js",
+          "layouts/CommonLayout": "./node_modules/react-evefyou-layouts/es/CommonLayout/index.js",
+          "layouts/BasicFooter": "./node_modules/react-evefyou-layouts/es/BasicFooter/index.js",
+          "layouts/BasicHeader": "./node_modules/react-evefyou-layouts/es/BasicHeader/index.js",
+          "layouts/BasicSider": "./node_modules/react-evefyou-layouts/es/BasicSider/index.js",
+          "containers/BasicContainer": "./node_modules/react-evefyou-containers/es/BasicContainer/index.js",
+          "containers/TabContainer": "./node_modules/react-evefyou-containers/es/TabContainer/index.js",
+          "containers/TableContainer": "./node_modules/react-evefyou-containers/es/TableContainer/index.js",
+          "containers/KeepAliveContainer": "./node_modules/react-evefyou-containers/es/KeepAliveContainer/index.js",
+          "components/BasicBreadcrumb": "./node_modules/react-evefyou-components/es/BasicBreadcrumb/index.js",
+          "components/BasicButton": "./node_modules/react-evefyou-components/es/BasicButton/index.js",
+          "components/BasicDropdown": "./node_modules/react-evefyou-components/es/BasicDropdown/index.js",
+          "components/BasicForm": "./node_modules/react-evefyou-components/es/BasicForm/index.js",
+          "components/BasicHelp": "./node_modules/react-evefyou-components/es/BasicHelp/index.js",
+          "components/BasicIcon": "./node_modules/react-evefyou-components/es/BasicIcon/index.js",
+          "components/BasicMenu": "./node_modules/react-evefyou-components/es/BasicMenu/index.js",
+          "components/BasicModal": "./node_modules/react-evefyou-components/es/BasicModal/index.js",
+          "components/BasicPopButton": "./node_modules/react-evefyou-components/es/BasicPopButton/index.js",
+          "components/BasicScroll": "./node_modules/react-evefyou-components/es/BasicScroll/index.js",
+          "components/BasicTable": "./node_modules/react-evefyou-components/es/BasicTable/index.js",
+          "components/BasicTitle": "./node_modules/react-evefyou-components/es/BasicTitle/index.js",
+          "components/BasicFallback": "./node_modules/react-evefyou-components/es/BasicFallback/index.js",
+          "components/BasicNProgress": "./node_modules/react-evefyou-components/es/BasicNProgress/index.js",
+          "components/BasicResult": "./node_modules/react-evefyou-components/es/BasicResult/index.js"
+        },
         output: {
+          minifyInternalExports: false,
           manualChunks: (id) => {
+            if (id.includes('_common') && id.includes('hooks/use')) {
+              console.log('hooks', id.split('/hooks/')[1].split('index.ts')[0])
+              return '_common/hooks/'.concat(id.split('/hooks/')[1].split('index.ts')[0])
+            }
+            if (id.includes('_common') && id.includes('utils/')) {
+              console.log('utils', id.split('/utils/')[1].split('index.ts')[0])
+              return '_common/utils/'.concat(id.split('/utils/')[1].split('index.ts')[0])
+            }
             let en = components
               .map(e => e.split('/'))
               .find(e => id.includes(e[0]) && id.includes(e[1]))?.join('/')
-            console.log('components en', en, id)
+            // console.log('components en', en, id)
             en ??= level1s.find(e => id.includes(e))
             // console.log('level1s en', en)
             en ??= locales.find(l => id.includes(l.split('_')[0]))
             // console.log('manualChunks', id)
+            if (id.includes('.css'))
+              en = pipe(
+                split('/'),
+                last,
+                split('.css'),
+                head
+              )(id) as string
+            console.log('css manualChunks', en, id)
             return en
           },
-          chunkFileNames: () => {
-            // console.log('chunkInfo', chunkInfo.name)
-            return '[format]/[name]/index.js'
-          },
+          // entryFileNames: (chunkInfo) => chunkInfo.name === 'index' ? '[format]/index.js' : '[format]/[name]/index.js',
+          chunkFileNames: '[format]/[name]/index.js',
           assetFileNames: '[ext]/[name].[ext]',
         },
         plugins: [

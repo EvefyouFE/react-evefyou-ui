@@ -8,6 +8,6 @@
  */
 import 'virtual:windi.css'
 
-export * from '@/components';
-export * from '@/containers';
-export * from '@/layouts';
+export * from 'react-evefyou-components'
+export * from 'react-evefyou-layouts'
+export * from 'react-evefyou-containers'
