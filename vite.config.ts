@@ -16,7 +16,7 @@ import cssnanoPlugin from "cssnano";
 import postcssPresetEnv from 'postcss-preset-env';
 import WindiCSS from 'vite-plugin-windicss';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
-import { head, includes, last, pipe, split } from "ramda";
+import { includes } from "ramda";
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import fs from 'fs';
@@ -77,6 +77,7 @@ export default defineConfig({
     }),
     libInjectCss({
       build: {
+        manifest: true,
         minify: true,
         reportCompressedSize: true,
         // cssCodeSplit: true,
@@ -95,6 +96,9 @@ export default defineConfig({
           'index': 'ui/index.ts',
           'locale/en_US': 'ui/locale/en_US.ts',
           'locale/zh_CN': 'ui/locale/zh_CN.ts',
+          "layouts": "./node_modules/react-evefyou-layouts/es/index.js",
+          "containers": "./node_modules/react-evefyou-containers/es/index.js",
+          "components": "./node_modules/react-evefyou-components/es/index.js",
           "layouts/AdminLayout": "./node_modules/react-evefyou-layouts/es/AdminLayout/index.js",
           "layouts/CommonLayout": "./node_modules/react-evefyou-layouts/es/CommonLayout/index.js",
           "layouts/BasicFooter": "./node_modules/react-evefyou-layouts/es/BasicFooter/index.js",
@@ -172,7 +176,7 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         modifyVars: {
-          hack: `true; @import (reference) "${path.resolve('ui/_common/styles/variables/index.less')}";`,
+          hack: `true; @import (reference) "${path.resolve('ui/styles/variables/index.less')}";`,
           'primary-color': '#0960bd',
           'text-color': '#c9d1d9',
           'text-color-base': '#000000d9',

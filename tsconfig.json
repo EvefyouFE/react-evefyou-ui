@@ -27,14 +27,8 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@common/*": [
-        "ui/_common/*"
-      ],
       "@/*": [
         "ui/*"
-      ],
-      "~*": [
-        "node_modules/*"
       ]
     }
   },
