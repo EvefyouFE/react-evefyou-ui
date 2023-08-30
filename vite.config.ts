@@ -16,7 +16,7 @@ import cssnanoPlugin from "cssnano";
 import postcssPresetEnv from 'postcss-preset-env';
 import WindiCSS from 'vite-plugin-windicss';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
-import { includes } from "ramda";
+import { includes, pipe, split } from "ramda";
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import fs from 'fs';
@@ -42,8 +42,6 @@ const components = Object.keys(pkg.exports)
   .map(e => e.split('./')[1])
   .filter(e => !includes(e, level1s))
 
-
-console.log('level1s', level1s)
 console.log('components', components)
 
 export default defineConfig({
@@ -127,6 +125,7 @@ export default defineConfig({
         output: {
           minifyInternalExports: false,
           manualChunks: (id) => {
+            const debugId = id.split('/').filter(i => !i.includes('@')).join('/')
             if (id.includes('_common') && id.includes('hooks/use')) {
               console.log('hooks', id.split('/hooks/')[1].split('index.ts')[0])
               return '_common/hooks/'.concat(id.split('/hooks/')[1].split('index.ts')[0])
@@ -138,11 +137,9 @@ export default defineConfig({
             let en = components
               .map(e => e.split('/'))
               .find(e => id.includes(e[0]) && id.includes(e[1]))?.join('/')
-            // console.log('components en', en, id)
-            en ??= level1s.find(e => id.includes(e))
-            // console.log('level1s en', en)
+            console.log('components en', en, debugId)
             en ??= locales.find(l => id.includes(l.split('_')[0]))
-            console.log('manualChunks', id)
+            console.log('locales en', en, debugId)
             // if (id.includes('windi.css'))
             //   en = pipe(
             //     split('/'),
