@@ -1,6 +1,6 @@
 {
   "name": "react-evefyou-ui",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
@@ -192,9 +192,9 @@
   },
   "homepage": "https://github.com/EvefyouFE/react-evefyou-ui#readme",
   "dependencies": {
-    "react-evefyou-components": "^1.0.35",
-    "react-evefyou-containers": "^1.0.25",
-    "react-evefyou-layouts": "^1.0.11"
+    "react-evefyou-components": "^1.0.36",
+    "react-evefyou-containers": "^1.0.28",
+    "react-evefyou-layouts": "^1.0.13"
   },
   "peerDependencies": {
     "@ant-design/icons": ">=5.0.1",
@@ -213,9 +213,9 @@
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0",
     "react-draggable": ">=4.4.5",
-    "react-evefyou-common": ">=1.0.8",
-    "react-evefyou-hooks": ">=1.0.17",
-    "react-evefyou-router": ">=1.0.12",
+    "react-evefyou-common": ">=1.0.9",
+    "react-evefyou-hooks": ">=1.0.20",
+    "react-evefyou-router": ">=1.0.13",
     "react-intl": ">=6.4.4",
     "react-router": ">=6.10.0",
     "react-router-dom": ">=6.10.0",
