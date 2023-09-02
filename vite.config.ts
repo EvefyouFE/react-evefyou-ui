@@ -1,7 +1,7 @@
 /*
- * @Author: EvefyouFE/evef
- * @Date: 2023-08-23 14:48:31
- * @FilePath: \react-evefyou-ui\vite.config.ts
+ * @Author: EvefyouFE
+ * @Date: 2023-08-10 13:42:48
+ * @FilePath: \react-evefyou-components\vite.config.ts
  * @Description: 
  * Everyone is coming to the world i live in, as i am going to the world lives for you. 人人皆往我世界，我为世界中人人。
  * Copyright (c) 2023 by EvefyouFE/evef, All Rights Reserved. 
@@ -16,153 +16,142 @@ import cssnanoPlugin from "cssnano";
 import postcssPresetEnv from 'postcss-preset-env';
 import WindiCSS from 'vite-plugin-windicss';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
-import { includes, pipe, split } from "ramda";
-import nodeResolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 import fs from 'fs';
+import { F, T, __, and, any, both, compose, cond, either, find, flip, identity, ifElse, includes, isNil, isNotNil, not, or, pipe, test, when } from "ramda";
 
 const pathResolve = (v: string) => path.resolve(__dirname, v)
 
+const libName = 'ui'
+
+
 const depPackages = [...Object.keys(pkg.dependencies)]
-const externalPackages = [...Object.keys(pkg.peerDependencies), ...Object.keys(pkg.dependencies)]
+const externalPackages = [...Object.keys(pkg.peerDependencies)]
 const regexOfPackages = externalPackages
   .map(packageName => new RegExp(`^${packageName}(\\/.*)?`));
 
-const entries = {
-  'index': pathResolve('ui/index.ts'),
-  'locale/en_US': pathResolve('ui/locale/en_US.ts'),
-  'locale/zh_CN': pathResolve('ui/locale/zh_CN.ts'),
-}
-const level1s = ['components', 'containers', 'layouts']
+const level1 = Object.keys(pkg.exports)
+  .filter(e => e !== '.' && !e.includes('locale') && !e.includes('css'))
+  .map(e => e.split('./')[1]).filter(e => !e.includes('/'))
+const components = Object.keys(pkg.exports)
+  .filter(e => e !== '.' && !e.includes('locale') && !e.includes('css') && e.includes('s/'))
+  .map(e => e.split('./')[1])
+console.log('level1', level1)
+console.log('components', components)
 const locales = Object.keys(pkg.exports)
   .filter(e => e.includes('locale'))
   .map(e => e.split('./')[1])
-const components = Object.keys(pkg.exports)
-  .filter(e => e !== '.' && !e.includes('locale'))
-  .map(e => e.split('./')[1])
-  .filter(e => !includes(e, level1s))
 
-console.log('components', components)
+const entries = Object.keys(pkg.exports).filter(e => !e.includes('css')).reduce((acc, cur) => {
+  const isIndex = cur === '.'
+  cur = cur.split('./')[1]
+  const key = isIndex ? 'index' : cur
+  const val = isIndex ? pathResolve(`${libName}/index.ts`) : pathResolve(`${libName}/${cur}/index.ts`)
+  acc[key] = val
+  return acc
+}, {})
 
+const formats = ['es', 'cjs']
+console.log('entries', entries)
+
+function moveFile(oldPath, newPath) {
+  fs.rename(oldPath, newPath, (err) => {
+    if (err) {
+      console.error('移动文件失败:', err);
+    } else {
+      console.log('文件已成功移动到新位置');
+    }
+  });
+}
+function moveCjsFiles() {
+  const f = 'cjs'
+  components.forEach(comp => {
+    fs.rm(pathResolve(`./${f}/${comp}.d.ts`), err => {
+      console.error('删除文件失败:', err);
+    })
+    fs.rm(pathResolve(`./cjs/${comp}/index.d.ts`), err => {
+      console.error('删除文件失败:', err);
+    })
+    fs.copyFile(pathResolve(`./es/${comp}/index.d.ts`), pathResolve(`./cjs/${comp}/index.d.ts`), err => {
+      console.error('拷贝文件失败:', err, pathResolve(`./es/${comp}/index.d.ts`), pathResolve(`./cjs/${comp}/index.d.ts`));
+    })
+  })
+}
+function moveEsFiles() {
+  const f = 'es'
+  components.forEach(comp => {
+    const oldComp = comp.split('/')[1]
+    const oldPath = pathResolve(`./${f}/${oldComp}.d.ts`)
+    const newPath = pathResolve(`./${f}/${comp}/index.d.ts`)
+    // console.log('move', oldPath, newPath)
+    moveFile(oldPath, newPath)
+
+    fs.rm(pathResolve(`./${f}/${comp}.d.ts`), err => {
+      console.error('删除文件失败:', err);
+    })
+  })
+}
 export default defineConfig({
   plugins: [
     react(),
     WindiCSS({
       scan: {
-        dirs: ['./ui'],
+        dirs: [`./${libName}`],
         fileExtensions: ['tsx', 'ts']
       }
     }),
     tsconfigPaths(),
     dts({
-      // insertTypesEntry: true,
+      outDir: formats,
       rollupTypes: true,
-      afterBuild: () => {
-        const directoryPath = '.';
-        const regexToDelete = /_\w+\.d\.ts$/;
-        fs.readdirSync(directoryPath).forEach((file) => {
-          const filePath = path.join(directoryPath, file);
-          if (regexToDelete.test(file)) {
-            try {
-              fs.unlinkSync(filePath);
-              console.log(`Deleted file: ${filePath}`);
-            } catch (err) {
-              console.error(`Error deleting file: ${err}`);
-            }
-          }
-        });
-      }
+      afterBuild() {
+        console.log('start...', new Date().getTime())
+        setTimeout(() => {
+          moveEsFiles()
+          formats.forEach(f => {
+            level1.forEach(comp => {
+              const oldPath = pathResolve(`./${f}/${comp}.d.ts`)
+              const newPath = pathResolve(`./${f}/${comp}/index.d.ts`)
+              moveFile(oldPath, newPath)
+            })
+            locales.forEach(l => {
+              fs.rm(pathResolve(`${f}/${l}.d.ts`), (err) => {
+                console.error('删除文件失败:', err);
+              })
+              const ol = l.split('locale/')[1]
+              const oldPath = pathResolve(`./${f}/${ol}.d.ts`)
+              const newPath = pathResolve(`./${f}/${l}/index.d.ts`)
+              // console.log(oldPath, newPath)
+              moveFile(oldPath, newPath)
+            })
+          })
+          moveCjsFiles()
+        }, 10000);
+      },
     }),
     libInjectCss({
       build: {
         manifest: true,
         minify: true,
         reportCompressedSize: true,
-        // cssCodeSplit: true,
+        cssCodeSplit: true,
         outDir: '.',
       },
       entry: entries,
-      // fileName: (format, entryName) => {
-      //   return entryName === 'index'
-      //     ? `${format}/index.js`
-      //     : `${format}/[name]/index.js`
-      // },
       name: 'react-evefyou-ui',
-      formats: ["es", "cjs"],
+      formats: formats as any,
       rollupOptions: {
-        input: {
-          'index': 'ui/index.ts',
-          'locale/en_US': 'ui/locale/en_US.ts',
-          'locale/zh_CN': 'ui/locale/zh_CN.ts',
-          "layouts": "./node_modules/react-evefyou-layouts/es/index.js",
-          "containers": "./node_modules/react-evefyou-containers/es/index.js",
-          "components": "./node_modules/react-evefyou-components/es/index.js",
-          "layouts/AdminLayout": "./node_modules/react-evefyou-layouts/es/AdminLayout/index.js",
-          "layouts/CommonLayout": "./node_modules/react-evefyou-layouts/es/CommonLayout/index.js",
-          "layouts/BasicFooter": "./node_modules/react-evefyou-layouts/es/BasicFooter/index.js",
-          "layouts/BasicHeader": "./node_modules/react-evefyou-layouts/es/BasicHeader/index.js",
-          "layouts/BasicSider": "./node_modules/react-evefyou-layouts/es/BasicSider/index.js",
-          "containers/BasicContainer": "./node_modules/react-evefyou-containers/es/BasicContainer/index.js",
-          "containers/TabContainer": "./node_modules/react-evefyou-containers/es/TabContainer/index.js",
-          "containers/TableContainer": "./node_modules/react-evefyou-containers/es/TableContainer/index.js",
-          "containers/KeepAliveContainer": "./node_modules/react-evefyou-containers/es/KeepAliveContainer/index.js",
-          "components/BasicBreadcrumb": "./node_modules/react-evefyou-components/es/BasicBreadcrumb/index.js",
-          "components/BasicButton": "./node_modules/react-evefyou-components/es/BasicButton/index.js",
-          "components/BasicDropdown": "./node_modules/react-evefyou-components/es/BasicDropdown/index.js",
-          "components/BasicForm": "./node_modules/react-evefyou-components/es/BasicForm/index.js",
-          "components/BasicHelp": "./node_modules/react-evefyou-components/es/BasicHelp/index.js",
-          "components/BasicIcon": "./node_modules/react-evefyou-components/es/BasicIcon/index.js",
-          "components/BasicMenu": "./node_modules/react-evefyou-components/es/BasicMenu/index.js",
-          "components/BasicModal": "./node_modules/react-evefyou-components/es/BasicModal/index.js",
-          "components/BasicPopButton": "./node_modules/react-evefyou-components/es/BasicPopButton/index.js",
-          "components/BasicScroll": "./node_modules/react-evefyou-components/es/BasicScroll/index.js",
-          "components/BasicTable": "./node_modules/react-evefyou-components/es/BasicTable/index.js",
-          "components/BasicTitle": "./node_modules/react-evefyou-components/es/BasicTitle/index.js",
-          "components/BasicFallback": "./node_modules/react-evefyou-components/es/BasicFallback/index.js",
-          "components/BasicNProgress": "./node_modules/react-evefyou-components/es/BasicNProgress/index.js",
-          "components/BasicResult": "./node_modules/react-evefyou-components/es/BasicResult/index.js"
-        },
         output: {
           minifyInternalExports: false,
-          manualChunks: (id) => {
-            const debugId = id.split('/').filter(i => !i.includes('@')).join('/')
-            if (id.includes('_common') && id.includes('hooks/use')) {
-              console.log('hooks', id.split('/hooks/')[1].split('index.ts')[0])
-              return '_common/hooks/'.concat(id.split('/hooks/')[1].split('index.ts')[0])
-            }
-            if (id.includes('_common') && id.includes('utils/')) {
-              console.log('utils', id.split('/utils/')[1].split('index.ts')[0])
-              return '_common/utils/'.concat(id.split('/utils/')[1].split('index.ts')[0])
-            }
-            let en = components
-              .map(e => e.split('/'))
-              .find(e => id.includes(e[0]) && id.includes(e[1]))?.join('/')
-            console.log('components en', en, debugId)
-            en ??= locales.find(l => id.includes(l.split('_')[0]))
-            console.log('locales en', en, debugId)
-            // if (id.includes('windi.css'))
-            //   en = pipe(
-            //     split('/'),
-            //     last,
-            //     split('.css'),
-            //     head
-            //   )(id) as string
-            // id.includes('windi.css') && console.log('css manualChunks', en, id)
-            return en
-          },
-          entryFileNames: (chunkInfo) => chunkInfo.name === 'index' ? '[format]/index.js' : '[format]/[name]/index.js',
-          chunkFileNames: '[format]/[name]/index.js',
+          manualChunks: (id) => id.includes('windi') && 'css/windi',
+          chunkFileNames: '[format]/[name].js',
           assetFileNames: '[ext]/[name].[ext]',
+          entryFileNames: (chunkInfo) => chunkInfo.name === 'index'
+            ? '[format]/[name].js' : '[format]/[name]/index.js'
         },
-        plugins: [
-          nodeResolve(),
-          commonjs()
-        ],
-        external: (source) => depPackages.find(p => source.includes(p))
-          ? false
-          : regexOfPackages.findIndex(p => p.test(source)) !== -1
-            ? true
-            : false
+        external: (id) => and(
+          not(any(flip(includes)(id as any), depPackages)),
+          any(flip(test)(id), regexOfPackages)
+        )
       }
     })
   ],
@@ -173,7 +162,7 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         modifyVars: {
-          hack: `true; @import (reference) "${path.resolve('ui/styles/variables/index.less')}";`,
+          hack: `true; @import (reference) "${pathResolve(`${libName}/styles/variables/index.less`)}";`,
           'primary-color': '#0960bd',
           'text-color': '#c9d1d9',
           'text-color-base': '#000000d9',

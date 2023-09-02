@@ -1,169 +1,143 @@
 {
   "name": "react-evefyou-ui",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
   "module": "./es/index.js",
-  "types": "./index.d.ts",
+  "types": "./es/index.d.ts",
   "exports": {
     ".": {
       "import": "./es/index.js",
-      "require": "./cjs/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/index.js"
+    },
+    "./windicss": {
+      "import": "./css/windi.css",
+      "require": "./css/windi.css"
     },
     "./locale/zh_CN": {
       "import": "./es/locale/zh_CN/index.js",
       "require": "./cjs/locale/zh_CN/index.js",
-      "types": "./locale/zh_CN.d.ts"
+      "types": "./es/locale/zh_CN/index.d.ts"
     },
     "./locale/en_US": {
       "import": "./es/locale/en_US/index.js",
       "require": "./cjs/locale/en_US/index.js",
-      "types": "./locale/en_US.d.ts"
+      "types": "./es/locale/en_US/index.d.ts"
     },
     "./components": {
       "import": "./es/components/index.js",
-      "require": "./cjs/components/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/index.js"
     },
     "./layouts": {
       "import": "./es/layouts/index.js",
-      "require": "./cjs/layouts/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/layouts/index.js"
     },
     "./containers": {
       "import": "./es/containers/index.js",
-      "require": "./cjs/containers/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/containers/index.js"
     },
     "./layouts/AdminLayout": {
       "import": "./es/layouts/AdminLayout/index.js",
-      "require": "./cjs/layouts/AdminLayout/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/layouts/AdminLayout/index.js"
     },
     "./layouts/CommonLayout": {
       "import": "./es/layouts/CommonLayout/index.js",
-      "require": "./cjs/layouts/CommonLayout/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/layouts/CommonLayout/index.js"
     },
     "./layouts/BasicFooter": {
       "import": "./es/layouts/BasicFooter/index.js",
-      "require": "./cjs/layouts/BasicFooter/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/layouts/BasicFooter/index.js"
     },
     "./layouts/BasicHeader": {
       "import": "./es/layouts/BasicHeader/index.js",
-      "require": "./cjs/layouts/BasicHeader/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/layouts/BasicHeader/index.js"
     },
     "./layouts/BasicSider": {
       "import": "./es/layouts/BasicSider/index.js",
-      "require": "./cjs/layouts/BasicSider/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/layouts/BasicSider/index.js"
     },
     "./containers/BasicContainer": {
       "import": "./es/containers/BasicContainer/index.js",
-      "require": "./cjs/containers/BasicContainer/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/containers/BasicContainer/index.js"
     },
     "./containers/TabContainer": {
       "import": "./es/containers/TabContainer/index.js",
-      "require": "./cjs/containers/TabContainer/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/containers/TabContainer/index.js"
     },
     "./containers/TableContainer": {
       "import": "./es/containers/TableContainer/index.js",
-      "require": "./cjs/containers/TableContainer/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/containers/TableContainer/index.js"
     },
     "./containers/KeepAliveContainer": {
       "import": "./es/containers/KeepAliveContainer/index.js",
-      "require": "./cjs/containers/KeepAliveContainer/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/containers/KeepAliveContainer/index.js"
     },
     "./components/BasicBreadcrumb": {
       "import": "./es/components/BasicBreadcrumb/index.js",
-      "require": "./cjs/components/BasicBreadcrumb/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicBreadcrumb/index.js"
     },
     "./components/BasicButton": {
       "import": "./es/components/BasicButton/index.js",
-      "require": "./cjs/components/BasicButton/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicButton/index.js"
     },
     "./components/BasicDropdown": {
       "import": "./es/components/BasicDropdown/index.js",
-      "require": "./cjs/components/BasicDropdown/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicDropdown/index.js"
     },
     "./components/BasicForm": {
       "import": "./es/components/BasicForm/index.js",
-      "require": "./cjs/components/BasicForm/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicForm/index.js"
     },
     "./components/BasicHelp": {
       "import": "./es/components/BasicHelp/index.js",
-      "require": "./cjs/components/BasicHelp/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicHelp/index.js"
     },
     "./components/BasicIcon": {
       "import": "./es/components/BasicIcon/index.js",
-      "require": "./cjs/components/BasicIcon/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicIcon/index.js"
     },
     "./components/BasicMenu": {
       "import": "./es/components/BasicMenu/index.js",
-      "require": "./cjs/components/BasicMenu/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicMenu/index.js"
     },
     "./components/BasicModal": {
       "import": "./es/components/BasicModal/index.js",
-      "require": "./cjs/components/BasicModal/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicModal/index.js"
     },
     "./components/BasicPopButton": {
       "import": "./es/components/BasicPopButton/index.js",
-      "require": "./cjs/components/BasicPopButton/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicPopButton/index.js"
     },
     "./components/BasicScroll": {
       "import": "./es/components/BasicScroll/index.js",
-      "require": "./cjs/components/BasicScroll/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicScroll/index.js"
     },
     "./components/BasicTable": {
       "import": "./es/components/BasicTable/index.js",
-      "require": "./cjs/components/BasicTable/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicTable/index.js"
     },
     "./components/BasicTitle": {
       "import": "./es/components/BasicTitle/index.js",
-      "require": "./cjs/components/BasicTitle/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicTitle/index.js"
     },
     "./components/BasicFallback": {
       "import": "./es/components/BasicFallback/index.js",
-      "require": "./cjs/components/BasicFallback/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicFallback/index.js"
     },
     "./components/BasicNProgress": {
       "import": "./es/components/BasicNProgress/index.js",
-      "require": "./cjs/components/BasicNProgress/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicNProgress/index.js"
     },
     "./components/BasicResult": {
       "import": "./es/components/BasicResult/index.js",
-      "require": "./cjs/components/BasicResult/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/components/BasicResult/index.js"
     }
   },
   "files": [
     "cjs",
     "es",
-    "css",
-    "index.d.ts",
-    "locale"
+    "css"
   ],
   "scripts": {
     "dev": "vite",
@@ -192,9 +166,9 @@
   },
   "homepage": "https://github.com/EvefyouFE/react-evefyou-ui#readme",
   "dependencies": {
-    "react-evefyou-components": "^1.0.37",
-    "react-evefyou-containers": "^1.0.29",
-    "react-evefyou-layouts": "^1.0.15"
+    "react-evefyou-components": "^1.0.38",
+    "react-evefyou-containers": "^1.0.30",
+    "react-evefyou-layouts": "^1.0.16"
   },
   "peerDependencies": {
     "@ant-design/icons": ">=5.0.1",
@@ -213,9 +187,9 @@
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0",
     "react-draggable": ">=4.4.5",
-    "react-evefyou-common": ">=1.0.9",
-    "react-evefyou-hooks": ">=1.0.21",
-    "react-evefyou-router": ">=1.0.13",
+    "react-evefyou-common": ">=1.0.12",
+    "react-evefyou-hooks": ">=1.0.23",
+    "react-evefyou-router": ">=1.0.15",
     "react-intl": ">=6.4.4",
     "react-router": ">=6.10.0",
     "react-router-dom": ">=6.10.0",
