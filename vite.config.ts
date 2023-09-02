@@ -17,7 +17,7 @@ import postcssPresetEnv from 'postcss-preset-env';
 import WindiCSS from 'vite-plugin-windicss';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
 import fs from 'fs';
-import { F, T, __, and, any, both, compose, cond, either, find, flip, identity, ifElse, includes, isNil, isNotNil, not, or, pipe, test, when } from "ramda";
+import { and, any, flip, includes, not, test } from "ramda";
 
 const pathResolve = (v: string) => path.resolve(__dirname, v)
 

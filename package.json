@@ -1,6 +1,6 @@
 {
   "name": "react-evefyou-ui",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
@@ -132,6 +132,10 @@
     "./components/BasicResult": {
       "import": "./es/components/BasicResult/index.js",
       "require": "./cjs/components/BasicResult/index.js"
+    },
+    "./components/MessageHelper": {
+      "import": "./es/components/MessageHelper/index.js",
+      "require": "./cjs/components/MessageHelper/index.js"
     }
   },
   "files": [
