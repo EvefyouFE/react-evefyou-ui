@@ -7,7 +7,4 @@
  * Copyright (c) 2023 by EvefyouFE/evef, All Rights Reserved. 
  */
 import 'react-evefyou-containers/windicss'
-export * from './BasicContainer'
-export * from './TabContainer'
-export * from './TableContainer'
-export * from './KeepAliveContainer'
+export * from 'react-evefyou-containers'

@@ -6,11 +6,7 @@
  * Everyone is coming to the world i live in, as i am going to the world lives for you. 人人皆往我世界，我为世界中人人。
  * Copyright (c) 2023 by EvefyouFE/evef, All Rights Reserved. 
  */
-import 'virtual:windi.css'
+import 'react-evefyou-layouts/windicss'
 
-export * from './AdminLayout'
-export * from './CommonLayout'
-export * from './BasicFooter'
-export * from './BasicHeader'
-export * from './BasicSider'
+export * from 'react-evefyou-layouts'
 

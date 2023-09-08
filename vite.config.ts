@@ -30,15 +30,15 @@ const regexOfPackages = externalPackages
   .map(packageName => new RegExp(`^${packageName}(\\/.*)?`));
 
 const level1 = Object.keys(pkg.exports)
-  .filter(e => e !== '.' && !e.includes('locale') && !e.includes('css'))
+  .filter(e => e !== '.' && !e.includes('locales') && !e.includes('css'))
   .map(e => e.split('./')[1]).filter(e => !e.includes('/'))
 const components = Object.keys(pkg.exports)
-  .filter(e => e !== '.' && !e.includes('locale') && !e.includes('css') && e.includes('s/'))
+  .filter(e => e !== '.' && !e.includes('locales') && !e.includes('css') && e.includes('s/'))
   .map(e => e.split('./')[1])
 console.log('level1', level1)
 console.log('components', components)
 const locales = Object.keys(pkg.exports)
-  .filter(e => e.includes('locale'))
+  .filter(e => e.includes('locales'))
   .map(e => e.split('./')[1])
 
 const entries = Object.keys(pkg.exports).filter(e => !e.includes('css')).reduce((acc, cur) => {
@@ -117,7 +117,7 @@ export default defineConfig({
               fs.rm(pathResolve(`${f}/${l}.d.ts`), (err) => {
                 console.error('删除文件失败:', err);
               })
-              const ol = l.split('locale/')[1]
+              const ol = l.split('locales/')[1]
               const oldPath = pathResolve(`./${f}/${ol}.d.ts`)
               const newPath = pathResolve(`./${f}/${l}/index.d.ts`)
               // console.log(oldPath, newPath)

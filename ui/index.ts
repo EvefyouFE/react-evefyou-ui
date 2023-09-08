@@ -7,9 +7,7 @@
  * Copyright (c) 2023 by EvefyouFE/evef, All Rights Reserved. 
  */
 import 'virtual:windi.css'
-import 'react-evefyou-components/windicss'
-import 'react-evefyou-containers/windicss'
 
-export * from 'react-evefyou-components'
-export * from 'react-evefyou-layouts'
-export * from 'react-evefyou-containers'
+export * from './components'
+export * from './containers'
+export * from './layouts'
