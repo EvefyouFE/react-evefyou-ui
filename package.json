@@ -1,6 +1,6 @@
 {
   "name": "react-evefyou-ui",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
@@ -144,6 +144,42 @@
     "./components/MessageHelper": {
       "import": "./es/components/MessageHelper/index.js",
       "require": "./cjs/components/MessageHelper/index.js"
+    },
+    "./modules": {
+      "import": "./es/modules/index.js",
+      "require": "./cjs/modules/index.js"
+    },
+    "./modules/AppLogo": {
+      "import": "./es/modules/AppLogo/index.js",
+      "require": "./cjs/modules/AppLogo/index.js"
+    },
+    "./modules/Logout": {
+      "import": "./es/modules/Logout/index.js",
+      "require": "./cjs/modules/Logout/index.js"
+    },
+    "./modules/LoginForm": {
+      "import": "./es/modules/LoginForm/index.js",
+      "require": "./cjs/modules/LoginForm/index.js"
+    },
+    "./modules/LocaleDropdown": {
+      "import": "./es/modules/LocaleDropdown/index.js",
+      "require": "./cjs/modules/LocaleDropdown/index.js"
+    },
+    "./modules/UserActionDropdown": {
+      "import": "./es/modules/UserActionDropdown/index.js",
+      "require": "./cjs/modules/UserActionDropdown/index.js"
+    },
+    "./modules/ReminderPopoverTabs": {
+      "import": "./es/modules/ReminderPopoverTabs/index.js",
+      "require": "./cjs/modules/ReminderPopoverTabs/index.js"
+    },
+    "./sections": {
+      "import": "./es/sections/index.js",
+      "require": "./cjs/sections/index.js"
+    },
+    "./sections/ReminderSection": {
+      "import": "./es/sections/ReminderSection/index.js",
+      "require": "./cjs/sections/ReminderSection/index.js"
     }
   },
   "files": [
@@ -178,9 +214,9 @@
   },
   "homepage": "https://github.com/EvefyouFE/react-evefyou-ui#readme",
   "dependencies": {
-    "react-evefyou-components": "^1.0.45",
+    "react-evefyou-components": "^1.0.46",
     "react-evefyou-containers": "^1.0.36",
-    "react-evefyou-layouts": "^1.0.22"
+    "react-evefyou-layouts": "^1.0.23"
   },
   "peerDependencies": {
     "@ant-design/icons": ">=5.0.1",
@@ -201,7 +237,6 @@
     "react-draggable": ">=4.4.5",
     "react-evefyou-common": ">=1.0.17",
     "react-evefyou-hooks": ">=1.0.28",
-    "react-evefyou-router": ">=1.0.15",
     "react-intl": ">=6.4.4",
     "react-router": ">=6.10.0",
     "react-router-dom": ">=6.10.0",
