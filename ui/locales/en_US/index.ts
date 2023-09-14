@@ -8,8 +8,10 @@
  */
 import enUS_components from 'react-evefyou-components/locales/en_US'
 import enUS_containers from 'react-evefyou-containers/locales/en_US'
+import { modules_enUS } from "./modules";
 
 export default {
+  ...modules_enUS,
   ...enUS_components,
   ...enUS_containers,
 };

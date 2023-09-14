@@ -8,8 +8,10 @@
  */
 import zhCN_components from 'react-evefyou-components/locales/zh_CN'
 import zhCN_containers from 'react-evefyou-containers/locales/zh_CN'
+import { modules_zhCN } from "./modules";
 
 export default {
+  ...modules_zhCN,
   ...zhCN_components,
   ...zhCN_containers,
 };
