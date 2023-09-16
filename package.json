@@ -214,9 +214,9 @@
   },
   "homepage": "https://github.com/EvefyouFE/react-evefyou-ui#readme",
   "dependencies": {
-    "react-evefyou-components": "^1.0.48",
-    "react-evefyou-containers": "^1.0.38",
-    "react-evefyou-layouts": "^1.0.26"
+    "react-evefyou-components": "^1.0.49",
+    "react-evefyou-containers": "^1.0.40",
+    "react-evefyou-layouts": "^1.0.27"
   },
   "peerDependencies": {
     "@ant-design/icons": ">=5.0.1",
